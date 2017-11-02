@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<title>******上传文件大小的限制和判断***********</title>
+<script language="javascript" type="text/javascript">
+function getFileSize(filename)
+{
+    // var filename = document.all('fileup').value; //获得上传文件的物理路径
+    if(filename =='')
+     {
+       alert("你还没有浏览要上传的文件"); 
+return false;
+     }
+
+     try { 
+       
+var fso,f,fname,fsize;
+var flength=40000; //设置上传的文件最大值（单位：kb），超过此值则不上传。 
+fso=new ActiveXObject("Scripting.FileSystemObject");
+        f=fso.GetFile(filename);//文件的物理路径
+fname=fso.GetFileName(filename);//文件名（包括扩展名）
+fsize=f.Size; //文件大小（bit）
+fsize=fsize/1024;
+//去掉注释，可以测试
+        //alert("文件路径："+f);
+//alert("文件名："+fname);
+//alert("文件大小："+fsize+"kb");
+if(fsize>flength)
+{
+alert("上传的文件到小为："+fsize+"kb,\n超过最大限度"+flength+"kb,不允许上传 ");
+return false;
+}
+else
+{alert("允许上传，文件大小为："+fsize+"kb");}
+   
+      }
+      catch(e) 
+{
+alert(e+"\n 跳出此消息框，是由于你的activex控件没有设置好,\n"+
+"你可以在浏览器菜单栏上依次选择\n"+
+"工具->internet选项->\"安全\"选项卡->自定义级别,\n"+
+"打开\"安全设置\"对话框，把\"对没有标记为安全的\n"+
+"ActiveX控件进行初始化和脚本运行\"，改为\"启动\"即可");
+         return false;
+      }
+   
+   return true;
+     
+}
+</script>
+</head>
+<body>
+<form id="Form1" method="post" encType="multipart/form-data" runat="server">
+<INPUT id="fileup" type="file" size="80" name="fileup" onpropertychange="getFileSize(this.value)">
+<input type=button onclick="getFileSize(document.all('fileup').value)" value="测试"> 
+</form>
+</body>
+ 
+
