@@ -1,0 +1,22 @@
+文件上传：
+
+
+第一步：copy
+  1、css、js、uploade ---放到根目录下
+  2、smartupload.jar放到lib下
+  3、将辅助文件放到com.svse.util下
+
+第二步：写、改
+   在当前上传页面上：
+写：
+ <script type="text/javascript" src="${pageContext.request.contextPath }/js/myupload.js"></script>  
+写：
+<tr>
+	<td>
+	    附件：
+	</td>
+	  <jsp:include flush="true" page="uploade/myfile.jsp"></jsp:include>
+</tr>
+改:
+改写myfile.jsp中的上传文件的路径
+--------------------------------------------------------------------------------------------------

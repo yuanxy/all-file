@@ -1,0 +1,27 @@
+.zi {
+	font-size: 12px;
+	color: #666666;
+	text-decoration: none;
+	line-height: 22px;
+
+}
+a:link {
+	font-size: 12px;
+	color: #414141;
+	text-decoration: none;
+}
+a:visited {
+	font-size: 12px;
+	color: #414141;
+	text-decoration: none;
+}
+a:hover {
+	font-size: 12px;
+	color: #12C4FE;
+	text-decoration: underline;
+}
+.dzi {
+	font-size: 16px;
+	color: #FFFFFF;
+	text-decoration: none;
+}
