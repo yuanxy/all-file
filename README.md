@@ -6,6 +6,7 @@
 
 # 赞助
 如果您觉得该项目对您有帮助，请扫描下方二维码对我进行鼓励，以便我更好的维护和更新，谢谢支持！
+![](https://github.com/yuanxy/all-file/blob/master/zfb.png) 
 
 # 联系作者
 
