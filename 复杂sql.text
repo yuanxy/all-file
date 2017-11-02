@@ -1,0 +1,182 @@
+oracle复杂查询练习题
+ 
+1.删除重复记录(当表中无主键时)
+   www.2cto.com  
+Sql代码  
+create table TESTTB(    
+       bm varchar(4),    
+       mc varchar2(20)    
+)  
+insert into TESTTB values(1,'aaaa');    
+insert into TESTTB values(1,'aaaa');    
+insert into TESTTB values(2,'bbbb');    
+insert into TESTTB values(2,'bbbb');   
+ 
+/*方案一*/  
+delete from TESTTB where rowid not in   
+(select max(rowid) from TESTTB group by TESTTB.BM,TESTTB.MC)  
+  
+/*方案二*/  
+delete from TESTTB a where a.rowid!= (    
+select max(rowid) from TESTTB b where a.bm=b.bm and a.mc=b.mc    
+)   
+ 
+2.bookEnrol是用来登记的，不管你是借还是还，都要添加一条记录。
+请写一个SQL语句，获取到现在状态为已借出的所有图书的相关信息，
+ID为3的java书，由于以归还，所以不要查出来。要求查询结果应为：(被借出的书和被借出的日期)
+ 
+Sql代码  
+create table book(    
+  id int ,    
+  name varchar2(30),    
+  PRIMARY KEY (id)    
+)    
+insert into book values(1,'English');    
+insert into book values(2,'Math');    
+insert into book values(3,'JAVA');    
+  
+create table bookEnrol(    
+  id int,    
+  bookId int,    
+  dependDate date,    
+  state int,    
+  FOREIGN KEY (bookId) REFERENCES book(id) ON DELETE CASCADE    
+)    
+insert into bookEnrol values(1,1,to_date('2009-01-02','yyyy-mm-dd'),1);    
+insert into bookEnrol values(2,1,to_date('2009-01-12','yyyy-mm-dd'),2);    
+insert into bookEnrol values(3,2,to_date('2009-01-14','yyyy-mm-dd'),1);    
+insert into bookEnrol values(4,1,to_date('2009-01-17','yyyy-mm-dd'),1);    
+insert into bookEnrol values(5,2,to_date('2009-02-14','yyyy-mm-dd'),2);    
+insert into bookEnrol values(6,2,to_date('2009-02-15','yyyy-mm-dd'),1);    
+insert into bookEnrol values(7,3,to_date('2009-02-18','yyyy-mm-dd'),1);    
+insert into bookEnrol values(8,3,to_date('2009-02-19','yyyy-mm-dd'),2);   
+ www.2cto.com  
+/*方案一*/  
+select a.id,a.name,b.dependdate from book a,bookenrol b where    
+a.id=b.bookid     
+and     
+b.dependdate in(select max(dependdate) from bookenrol group by bookid )    
+and b.state=1    
+  
+/*方案二*/  
+select k.id,k.name,a.dependdate    
+  from bookenrol a, BOOK k    
+ where a.id in (select max(b.id) from bookenrol b group by b.bookid)    
+   and a.state = 1    
+   and a.bookid = k.id;   
+ 
+3.查询每年销量最多的产品的相关信息
+   www.2cto.com  
+Sql代码  
+create table t2 (    
+year_ varchar2(4),    
+product varchar2(4),    
+sale    number    
+)    
+    
+insert into t2 values('2005','a',700);    
+insert into t2 values('2005','b',550);    
+insert into t2 values('2005','c',600);    
+insert into t2 values('2006','a',340);    
+insert into t2 values('2006','b',500);    
+insert into t2 values('2007','a',220);    
+insert into t2 values('2007','b',350);    
+insert into t2 values('2007','c',350);    
+  
+/**方案一*/  
+select a.year_,a.sale,a.product from t2 a inner join(    
+select max(sale) as sl from t2 group by year_) b    
+on a.sale=b.sl  order by a.year_  
+  
+/*方案二*/  
+select sa.year_, sa.product, sa.sale     
+from t2 sa,    
+       (select t.year_ pye, max(t.sale) maxcout    
+        from t2 t    
+        group by t.year_) tmp    
+where sa.year_ = tmp.pye    
+and sa.sale = tmp.maxcout   
+ 
+4.排序问题，如果用总积分做降序排序..因为总积分是字符型，所以排出来是这样子(9,8,7,6,5...)，要求按照总积分的数字大小排序。
+  www.2cto.com  
+Sql代码  
+create table t4(    
+姓名   varchar2(20),    
+月积分 varchar2(20),    
+总积分 char(3)    
+)    
+    
+insert into t4 values('WhatIsJava','1','99');    
+insert into t4 values('水王','76','981');    
+insert into t4 values('新浪网','65','96');    
+insert into t4 values('牛人','22','9');    
+insert into t4 values('中国队','64','89');    
+insert into t4 values('信息','66','66');    
+insert into t4 values('太阳','53','66');    
+insert into t4 values('中成药','11','33');    
+insert into t4 values('西洋参','257','26');    
+insert into t4 values('大拿','33','23');    
+  www.2cto.com  
+/*方案一*/  
+select * from t4 order by cast(总积分 as int) desc   
+  
+/*方案二*/  
+select * from t4 order by to_number(总积分) desc;   
+   www.2cto.com  
+5.得出所有人（不区分人员）每个月及上月和下月的总收入
+Sql代码  
+create table t5 (  tmonth int,    
+tname varchar2(10),    
+income number    
+)    
+insert into t5 values('08','a',1000);    
+insert into t5 values('09','a',2000);    
+insert into t5 values('10','a',3000);    
+  
+/*方案一*/  
+select o.tmonth,sum(o.income) as cur,(select sum(t.income) from t5 t where t.tmonth=(o.tmonth+1) group by t.tmonth) as next,    
+(select sum(t.income) from t5 t where t.tmonth=(o.tmonth-1) group by t.tmonth) as last    
+from t5 o where o.tmonth=2 group by o.tmonth  
+  
+/*方案二*/  
+select tmonth as 月份 ,tname as 姓名,sum(income) as 当月工资,    
+(select sum(income)     
+from t5     
+where tmonth = to_number(substr(to_char(sysdate,'yyyy-mm-dd'),7,1))-1) AS 上月工资 ,    
+(select sum(income)     
+from t5     
+where tmonth = to_number(substr(to_char(sysdate,'yyyy-mm-dd'),7,1))+1) AS 下月工资     
+from t5 where tmonth=substr(to_char(sysdate,'yyyy-mm-dd'),7,1)    
+group by tmonth,tname    
+ 
+6.根据现有的学生表，课程表，选课关系表，查询一。没有修过李明老师的课的学生，查询二，既学过a课程，又学过b课程的学生姓名
+   www.2cto.com  
+Sql代码  
+S表    [SNO,SNAME]--学生表  
+C表    [CNO,CNAME,CTEATHER] --课程表  
+SC表  [SNO，CNO，SCGRADE] --选课关系表  
+  
+查询一：没有修过李明老师的课的学生的姓名  
+select sname from s where not exists  
+(select*from sc,c where sc.cno=c.cno and c.cteather='李明' and sc.sno=s.sno)  
+  
+查询二：既学过a课程，又学过b课程的学生姓名  
+SELECT S.SNO,S.SNAME   
+FROM S,(   
+     SELECT SC.SNO   
+     FROM SC,C   
+     WHERE SC.CNO=C.CNO   
+         AND C.CNAME IN('a','b')   
+     GROUP BY SNO   
+)SC WHERE S.SNO=SC.SNO   
+    www.2cto.com  
+查询三： 列出有二门以上（含两门）不及格课程的学生姓名及其平均成绩   
+SELECT S.SNO,S.SNAME,AVG(SC.SCGRADE)  
+FROM S,SC,(   
+     SELECT SNO   
+     FROM SC   
+     WHERE SCGRADE <60   
+     GROUP BY SNO   
+     HAVING COUNT(DISTINCT CNO)>=2   
+)A WHERE S.SNO=A.SNO AND SC.SNO=A.SNO   
+GROUP BY S.SNO,S.SNAME   

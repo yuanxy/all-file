@@ -1,0 +1,30 @@
+查一下sga的大小
+select * from v$parameter
+where name like 'db%';
+
+更改db_cache_size大小
+alter system set db_cache_size=25165824 scope=both;  
+
+
+--listagg
+select t1.*, s.unitname
+                  from (select t.*,
+                               (select xm_dept
+                                  from project_info
+                                 where uids = t.uids) as xm_dept,
+                               (select jdmb_uids
+                                  from project_info
+                                 where uids = t.uids) as jdmb_uids
+                          from (select --wm_concat(lcb.fun_moduleid) as dyjd,
+                          lcb.fun_moduleid,
+                                       uids,
+                                       xm_name,
+                                       project_code
+                                  from project_lcb_vw lcb
+                                 where lcb.val != '/'
+                                   and lcb.val is not null
+                                   and to_char(to_date(lcb.val, 'yyyy-mm-dd'),
+                                               'yyyy-mm') = '2016-07'
+                                 group by fun_moduleid, uids, xm_name, project_code) t) t1,
+                       sgcc_ini_unit s
+                 where t1.xm_dept = s.unitid(+)

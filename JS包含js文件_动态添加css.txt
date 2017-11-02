@@ -1,0 +1,71 @@
+javascript包含javascript文件 先给出直接封装好的两个js
+
+function include_js(path) 
+{     
+      var sobj = document.createElement('script'); 
+      sobj.type = "text/javascript"; 
+      sobj.src = path; 
+      var headobj = document.getElementsByTagName('head')[0]; 
+      headobj.appendChild(sobj); 
+}
+function include_css(path) 
+{     
+var fileref=document.createElement("link") 
+fileref.rel = "stylesheet";
+fileref.type = "text/css";
+fileref.href = path; 
+var headobj = document.getElementsByTagName('head')[0]; 
+headobj.appendChild(fileref); 
+}
+include_css("css/kefu.css");
+
+include_js("HashMap.js");
+include_js("WebComm.js");
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+document.write("<scr"+"ipt language=javascript src='zdz.js'></scr"+"ipt>");
+这样就可以了！中国站长的统计里面就有这个代码！
+
+document.write("<link href=\"css/WebComm.css\" rel=\"stylesheet\" type=\"text/css\" />");
+
+用document.write方法无法放到头文件那里，有时候会有加载先后顺序的问题。用include可以。
+
+第二种方法是用字符串的形式
+
+file1.js: 
+var file2 = '<script language="javascript" src="file2.js"><\/script>'; 
+document.write(file2);
+
+第三种方法使用include
+
+//直接包含js文件。
+function include_abc(path) 
+{     
+      var sobj = document.createElement('script'); 
+      sobj.type = "text/javascript"; 
+      sobj.src = path; 
+      var headobj = document.getElementsByTagName('head')[0]; 
+      headobj.appendChild(sobj); 
+}
+//根据已经包含的第一个js文件路径，包含新的js文件
+function include(path) 
+{ 
+      var scripts = document.getElementsByTagName("script"); 
+      if(!scripts) return;
+      var jsPath = scripts[0].src;      
+      jsPath=jsPath.substring(0,jsPath.lastIndexOf('/')+1);
+      var sobj = document.createElement('script'); 
+      sobj.type = "text/javascript"; 
+      sobj.src = jsPath+path; 
+      var headobj = document.getElementsByTagName('head')[0]; 
+      headobj.appendChild(sobj); 
+}
+
+例如:
+现在已经有一Common.js文件包含在aspx页面上，路径是src="/JScript/Common.js"
+
+如果用include包含: include("WebsiteConfig.js");将把WebsiteConfig.js包含进页面,路径和Common.js相同。
+
+如果用include_abc包含则需要全路径,include_abc("/JScript/WebsiteConfig.js");
+使用include,必须要求页面上已经有一个包含的js文件.
+使用include_abc则不需要任何条见,就可以包含,但是必须指定要包含的js文件路径。

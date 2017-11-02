@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1">
+		<link href="css/style.css" type="text/css" rel="stylesheet"/>
+        <script src="js/jquery.js"></script>
+        <script>
+        $(document).ready(function(){
+	    $('.skillbar').each(function(){
+		$(this).find('.skillbar-bar').animate({
+			width:$(this).attr('data-percent')
+		},6000);
+	});
+});
+</script>
+       
+	</head>
+	<body>
+		<div class="title">微信投票</div>
+		<div class="content">
+			<span class="c-title">最牛国家</span>
+			<p class="c-time">2015-05-15 zmz 中环地产研发中心</p>
+			<img class="c-pic" src="images/pic.jpg">
+			<span class="c-join">大家来参加</span>
+			<div class="c-table">
+				<p>最牛国家（单选）</p>
+				<p><img class="c-tablepic" src="images/pic.jpg"><span style="width: 65px;">中国(已选)</span>
+                <i class="skillbar clearfix " data-percent="75%">
+	            <span class="skillbar-bar" style="background: #c6010f;"></span>
+	          
+                </i>
+                <span class="skill-bar-percent">75票</span>
+                <span class="skill-bar-percent">75%</span>
+                </p>
+				<p><img class="c-tablepic" src="images/pic.jpg"><span style="width: 65px;">美国</span>
+                <i class="skillbar clearfix " data-percent="65%">
+	            <span class="skillbar-bar" style="background: #c6010f;"></span>
+                </i>
+                <span class="skill-bar-percent">75票</span>
+                <span class="skill-bar-percent">65%</span>
+                </p>
+				<p><img class="c-tablepic" src="images/pic.jpg" ><span style="width: 65px;">俄罗斯</span> 
+                <i class="skillbar clearfix " data-percent="0%">
+	            <span class="skillbar-bar" style="background: #c6010f;"></span>
+                </i>
+                <span class="skill-bar-percent">0票</span>
+                 <span class="skill-bar-percent">0%</span>
+                </p>
+				<p style="text-align: center;">你已投票</p>
+			</div>
+		</div>
+	</body>
+</html>

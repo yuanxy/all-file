@@ -1,0 +1,18 @@
+1.原始数据列： 
+  手机号码，日期，数量 
+ 
+2.decode查询结果列： 
+手机号码，10月1日数量总和，10月2日数量总和。。。10月7日数量总和 
+select distinct recommender, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-01', 1, 0)) num, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-02', 1, 0)) num, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-03', 1, 0)) num, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-04', 1, 0)) num, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-05', 1, 0)) num, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-06', 1, 0)) num, 
+       sum(decode(to_char(handel_date, 'yyyy-mm-dd'), '2012-10-07', 1, 0)) num 
+  from rurality_recommenddg t   www.2cto.com  
+where t.status = '3' 
+   and t.handel_date > to_date('2012-10-01', 'yyyy-mm-dd') 
+   and t.handel_date < to_date('2012-10-08', 'yyyy-mm-dd') 
+group by recommender; 

@@ -1,0 +1,30 @@
+*{ padding: 0px; margin: 0px;}
+body{ font-size: 14px; font-family: "微软雅黑";}
+ul{ padding: 0px; margin: 0px;}
+li{ list-style-type: none;}
+a{text-decoration: none;}
+.title{ height: 45px; line-height: 45px; text-align: center; background: #c6010f; color: #fff; font-size: 18px; overflow: hidden;}
+.content{ margin: 0 20px 40px 20px;}
+.c-title{ font-size: 20px; line-height: 40px; color: #333;}
+.c-time{ color: #656565; border-bottom: 1px solid #ddd; font-size: 12px;}
+.c-pic{ width: 100%; display: block; margin: 15px 0;}
+.c-join{ color: #666; line-height: 30px;}
+.c-table{ border: 1px solid #ddd; border-bottom:0;}
+.c-table p{border-bottom: 1px solid #ddd; height: 51px; line-height: 51px; padding-left: 15px; color: #666;}
+.c-tablepic{ width: 57px; height: 35px;  float: left; margin-top: 8px; margin-right: 8px;}
+.c-select {float: left; margin-top: 20px; margin-right: 10px;}
+.c-introduce p{ text-indent: 24px; color: #666; font-size: 13px; line-height: 20px;}
+.c-inline{ width:20%; height: 10px; background: #cfcfcf; float: left; font-style: normal; margin-top: 20px;}
+.c-table span{ float: left; display: block; font-size: 12px;}
+.c-many{ margin-left: 10px;}
+.c-button{ height: 30px; color: #fff; background: #c60210; text-align: center; display: block; line-height: 30px; margin-top: 15px;}
+.skillbar-bar{ height:10px; float:left; display:block;}
+.skillbar {
+position: relative;
+float:left;
+width: 20%;
+background: #eee;
+height: 10px;
+margin-top:20px;
+}
+.skill-bar-percent{ float:left; margin-left:8px;}

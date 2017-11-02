@@ -1,0 +1,90 @@
+
+ORACLE循环语句
+ 
+1、 Exit When 循环：
+   www.2cto.com  
+Sql代码  
+declare   
+  -- Local variables here  
+  i integer;  
+begin  
+  i:=0;  
+  LOOP  
+  Exit When(i>5);  
+       Dbms_Output.put_line(i);  
+       i:=i+1;  
+  END LOOP;  
+end;  
+ 
+2、 Loop 循环
+ 
+Java代码  
+declare   
+  -- Local variables here  
+  i integer;  
+begin  
+  i:=0;  
+  loop  
+    i:=i+1;  
+    dbms_output.put_line(i);  
+    if i>5 then  
+       exit;  
+    end if;  
+  end loop;  
+end;  
+   www.2cto.com  
+3、 While 循环：
+ 
+Sql代码  
+declare   
+  -- Local variables here  
+  i integer;  
+begin  
+  i:=0;  
+  while i<5 loop  
+     i:=i+1;  
+     dbms_output.put_line(i);  
+  end loop;  
+end;  
+ 
+4、 For 普通循环：
+ 
+Sql代码  
+declare   
+  -- Local variables here  
+  i integer;  
+begin  
+  i:=0;  
+  for i in 1..5 loop  
+      dbms_output.put_line(i);  
+  end loop;  
+end;  
+   www.2cto.com  
+5 、 For 游标循环：
+    准备数据
+ 
+Sql代码  
+--创建表  
+create table test (id number);  
+  
+--插入数据  
+declare   
+  -- Local variables here  
+  i integer;  
+begin  
+  i:=0;  
+  for i in 1..5 loop  
+      insert into test values(i);  
+  end loop;    www.2cto.com  
+end;  
+    循环
+ 
+Sql代码  
+declare   
+  -- Local variables here  
+  begin  
+    for c_test in (select * from test) loop  
+           dbms_output.put_line(c_test.id);  
+  end loop;  
+    
+end;  

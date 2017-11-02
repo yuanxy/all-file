@@ -1,0 +1,7 @@
+在hibernate3.jar包里面，
+在org.hibernate.dialect包里面。
+常见的有：org.hibernate.dialect.SQLServerDialect
+org.hibernate.dialect.OracleDialect
+org.hibernate.dialect.MySQLDialect
+org.hibernate.dialect.DB2Dialect
+org.hibernate.dialect.SybaseDialect

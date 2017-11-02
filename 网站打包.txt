@@ -1,0 +1,25 @@
+方法1:
+
+用cmd 命令打包为war文件
+?
+
+第一步:开始运行里面 输入cmd  然后回车
+
+把他移动到您要打包的文件夹下  比如您的文件夹在D:\tomcat\webapps\root   你们就输入
+?
+
+D: 回车  
+
+Cd D:\tomcat\webapps\root 回车?
+jar  cvf   mormhweb.war . 
+jar  cvf   ROOT.war . 回车   
+
+这样就把自己的ROOT下的所有文件都打包为war 了   注意在打包的时候 jar  cvf   ROOT.war . 最后有个 . (点) 这个点不要忘记了...
+
+打开MyEclipse—>选择要打包的项目—>右击—>单击Export(导出)
+
+选择JsEE—>WAR file(MyEclipse)—>Next选择要打包的工程—>选择Browser(选择打包到哪个路径下，默认的为当前工程名中)最后单击Finish完成打包
+
+
+
+注意：打包前最好将各种jar包复制到要打包的项目的Lib目录下,将其一起打包，不然放到服务器中运行时，会找不到jar包，报错，
